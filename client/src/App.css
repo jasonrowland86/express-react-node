@@ -1,0 +1,29 @@
+.landing {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #E83B7A;
+}
+.main {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.header {
+  background-color: #E84C7A;
+}
+.nav {
+  background-color: #E8E77A;
+}
+.info {
+  background-color: #A89DFF;
+}
+.main-content {
+  flex: 1;
+  background-color: #FF8BFF;
+}
+.footer {
+  background-color: #A8DAFF;
+}
