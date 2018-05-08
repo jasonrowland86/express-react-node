@@ -14,6 +14,7 @@ import SingleFighter from './SingleFighter';
 import CompareFighters from './CompareFighters';
 import Login from './Login';
 import Register from './Register';
+import EventCard from './EventCard';
 import Events from './Events';
 import FighterIndex from './FighterIndex';
 import Footer from './Footer';
@@ -53,6 +54,7 @@ class Main extends React.Component {
           <Route exact path="/single" component={SingleFighter} />
           <Route exact path="/compare" component={CompareFighters} />
           <Route exact path="/events" component={Events} />
+          <Route exact path="/event/:id" component={EventCard} />
           <Route exact path="/fighters" component={FighterIndex} />
           <Footer />
         </div>

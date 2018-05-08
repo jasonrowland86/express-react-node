@@ -6,33 +6,44 @@ class MainSearch extends React.Component {
   constructor() {
     super();
     this.state = {
-      message: {}
+      message: {},
     }
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   componentDidMount() {
-    axios.get('/hello')
-    .then(res => {
-      this.setState({
-        message: res.data
-      }, ()=>{
-        console.log("Message from server: ", res.data.message);
-      })
-    })
+    
   }
 
-  // componentDidMount() {
-  //   fetch('/hello')
-  //   .then(res => res.json())
-  //   .then(message => this.setState({message}))
+  handleInputChange(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  // handleSubmit(e) {
+  //   e.preventDefault();
+  //   axios.post('/user', {
+  //     name: this.state.name
+  //   })
+  //   .then((res) => {
+  //     console.log(res);
+  //     console.log('posted');
+  //     this.getUsers();
+  //     this.setState({
+  //       name: ''
+  //     })
+  //   });
   // }
 
   render() {
-    console.log(this.state.message.message);
     let message = this.state.message.message;
+    console.log(message);
     return(
       <div className="main-content">
-        <h3>Main/Search</h3>
+        <h3>MainSearch</h3>
         <p>{message}</p>
       </div>
     )
