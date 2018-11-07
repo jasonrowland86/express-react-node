@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 class Register extends React.Component {
@@ -7,7 +7,8 @@ class Register extends React.Component {
     super();
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      fireRedirect: false
     }
     this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -27,6 +28,11 @@ class Register extends React.Component {
       password: this.state.password
     })
     .then(res => {
+      this.setState({
+        user: res.data.user,
+        fireRedirect: true
+      })
+      this.props.handleUser(res.data.user);
       console.log(res);
     })
     .catch(err => {
@@ -37,12 +43,15 @@ class Register extends React.Component {
   render() {
     return(
       <div className="main-content">
-        <h3>Register</h3>
+        <h3>Create Account</h3>
         <form onSubmit={(e) => this.registerSubmit(e)}>
           <input type='text' name='username' value={this.state.username} placeholder='Username' onChange={this.handleInputChange} />
           <input type='text' name='password' value={this.state.password} placeholder='Password' onChange={this.handleInputChange} />
-          <input className='button' type='submit' value='Register' />
+          <input className='button' type='submit' value='Create' />
         </form>
+        {this.state.fireRedirect &&
+          <Redirect to={{pathname: '/dashboard', state: {user: this.state.user} }} />
+        }
       </div>
     )
   }

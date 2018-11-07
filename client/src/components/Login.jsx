@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 class Login extends React.Component {
@@ -7,7 +7,9 @@ class Login extends React.Component {
     super();
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      user: null,
+      fireRedirect: false
     }
     this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -27,6 +29,11 @@ class Login extends React.Component {
       password: this.state.password
     })
     .then(res => {
+      this.props.handleUser(res.data.user);
+      this.setState({
+        user: res.data.user,
+        fireRedirect: true
+      })
       console.log(res);
     })
     .catch(err => {
@@ -40,9 +47,14 @@ class Login extends React.Component {
         <h3>Login</h3>
         <form onSubmit={(e) => this.loginSubmit(e)}>
           <input type='text' name='username' value={this.state.username} placeholder='Username' onChange={this.handleInputChange} />
-          <input type='text' name='password' value={this.state.password} placeholder='Password' onChange={this.handleInputChange} />
+          <input type='password' name='password' value={this.state.password} placeholder='Password' onChange={this.handleInputChange} />
           <input className='button' type='submit' value='Log in' />
         </form>
+        <br/>
+        <Link className="link" to="/register">Create Account</Link>
+        {this.state.fireRedirect &&
+          <Redirect to={{pathname: '/dashboard', state: {user: this.state.user} }} />
+        }
       </div>
     )
   }

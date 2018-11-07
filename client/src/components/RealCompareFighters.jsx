@@ -21,8 +21,9 @@ class CompareFighters extends React.Component {
 
   componentWillReceiveProps() {
     if (this.props.location.state.user) {
-      this.getPicks();
+
     }
+    this.getPicks();
     this.setState({
       event_id: this.props.location.state.eventID,
       fighter1: this.props.location.state.fighter1,
@@ -290,7 +291,7 @@ class CompareFighters extends React.Component {
         fighter2_weight_class = this.state.fighter2.weight_class.split("_");
         fighter2_weight_class = "Women's " + fighter2_weight_class[1];
       }
-      // Nickname:
+      // Nickname
      if (this.state.fighter1.nickname) {
        fighter1_nickname = <h4>{'"' + this.state.fighter1.nickname + '"'}</h4>;
      } else {
@@ -388,12 +389,9 @@ class CompareFighters extends React.Component {
     current_date = current_date[0];
     console.log(current_date);
 
-    let event_date;
-    if(this.props.location.state.eventDate) {
-      event_date = this.props.location.state.eventDate.split("T");
-      event_date = event_date[0];
-      console.log(event_date);
-    }
+    let event_date = this.props.location.state.eventDate.split("T");
+    event_date = event_date[0];
+    console.log(event_date);
 
     console.log(this.state);
     console.log(this.props);
@@ -421,18 +419,10 @@ class CompareFighters extends React.Component {
     }
     console.log(addFighter1, addFighter2);
 
-    //Handle wether compared fighters came from a search or an event
-    let path;
-    if (this.props.location.state.eventID) {
-      path = `/event/${this.props.location.state.eventID}`;
-    } else {
-      path = '/';
-    }
-
     return(
       <div className="main-content">
         <div className="above-fighters-container">
-          <Link className="link back-to-card" to={{pathname: path, state: {eventID: this.props.location.state.eventID} }}>Back</Link>
+          <Link className="link back-to-card" to={{pathname: `/event/${this.props.location.state.eventID}`, state: {eventID: this.props.location.state.eventID, user: this.props.location.state.user} }}>Back to Card</Link>
         </div>
         <div className="fighters-container">
           {this.handleFighter1NotFound()}
@@ -466,7 +456,7 @@ class CompareFighters extends React.Component {
         </div>
         {this.handleLoading()}
         {this.state.fireRedirect &&
-          <Redirect to={{pathname: `/event/${this.props.location.state.eventID}`, state: {eventID: this.props.location.state.eventID} }} />
+          <Redirect to={{pathname: `/event/${this.props.location.state.eventID}`, state: {eventID: this.props.location.state.eventID, user: this.props.location.state.user} }} />
         }
       </div>
     )

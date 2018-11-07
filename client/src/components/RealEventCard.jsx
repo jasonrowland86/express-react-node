@@ -6,25 +6,24 @@ class EventCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
-      user: this.props.location.state.user
+      loading: false
     }
 
   }
 
-  // componentWillReceiveProps(props) {
-  //   this.setState({
-  //     eventID: this.props.location.state.eventID,
-  //     card: '',
-  //     eventTitle: '',
-  //     eventSubtitle: '',
-  //     eventDate: '',
-  //     eventLocation: '',
-  //     loading: true
-  //   }, () => {
-  //     this.getFighters();
-  //   })
-  // }
+  componentWillReceiveProps(props) {
+    this.setState({
+      eventID: this.props.location.state.eventID,
+      card: '',
+      eventTitle: '',
+      eventSubtitle: '',
+      eventDate: '',
+      eventLocation: '',
+      loading: true,
+    }, () => {
+      this.getFighters();
+    })
+  }
 
   componentDidMount() {
     this.getFighters();
@@ -48,9 +47,7 @@ class EventCard extends React.Component {
       }, () => {
         this.getCard(this.props.location.state.eventID);
         //Add if statement to run getPicks
-        if(this.state.user) {
-          this.getPicks();
-        }
+        this.getPicks();
       })
     })
   }

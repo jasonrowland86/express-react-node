@@ -1,43 +1,49 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import UpComingEvents from './UpComingEvents';
+import Events from './Events';
+import TitleHolders from './TitleHolders';
+import PoundForPound from './PoundForPound';
 import axios from 'axios';
 
 class Info extends React.Component {
   constructor() {
     super();
     this.state = {
-      events: ''
+      upcoming: true
     }
-
+    this.handleEventState = this.handleEventState.bind(this);
   }
 
-  componentDidMount() {
-    this.getEvents();
-  }
-
-  getEvents() {
-    axios.get('/events')
-    .then(res => {
-      let events = JSON.parse(JSON.stringify(res.data.events));
+  handleEventState() {
+    if (this.state.upcoming) {
       this.setState({
-        events: events
+        upcoming: false
       })
-    })
+    } else {
+      this.setState({
+        upcoming: true
+      })
+    }
   }
 
   render() {
-    console.log(this.state.events);
-    if(this.state.events) {
-      var events = this.state.events.map((e) => {
-        // return <a href='' id={e.id}>{e}</a>
-        return <Link to={`/event/${e.id}`}>{e.title_tag_line}</Link>
-      })
-      console.log(events);
-    }
+    console.log(this.props);
     return(
       <div className="info">
-        <h3>Info</h3>
-        {events}
+        <div className="info-container">
+          <TitleHolders />
+          <Events user={this.props.user} upcoming={this.state.upcoming}/>
+          <PoundForPound />
+        </div>
+        <br/>
+        <div className="event-buttons">
+          {this.state.upcoming ?
+            <button onClick={this.handleEventState}>Recent Events</button>
+            :
+            <button onClick={this.handleEventState}>Upcoming Events</button>
+          }
+        </div>
+        <br/>
       </div>
     )
   }

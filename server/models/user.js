@@ -3,11 +3,14 @@ const Schema = mongoose.Schema;
 
 //Create Schema
 const PickSchema = new Schema({
-  name: String
+  name: String,
+  fighterID: Number,
+  eventID: Number
 });
 
 const UserSchema = new Schema({
   name: String,
+  password: String,
   picks: [PickSchema]
 });
 

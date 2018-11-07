@@ -9,7 +9,7 @@ class Landing extends React.Component {
   constructor() {
     super();
     this.state = {
-
+      user: null
     }
   }
 
@@ -18,7 +18,7 @@ class Landing extends React.Component {
       <Router>
         <div className="landing">
           <h2>Landing</h2>
-          <Link to="/" onClick={this.props.changePage}>Main Site</Link>
+          <Link to="/" user={this.state.user} onClick={this.props.changePage}>Main Site</Link>
         </div>
       </Router>
     )
