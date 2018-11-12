@@ -6,15 +6,20 @@ class Banner extends React.Component {
   constructor() {
     super();
     this.state = {
-      events: null
+      events: null,
+      loading: true
     }
   }
 
   componentDidMount() {
-    this.getEventImages();
+    this.setState({
+      loading: false
+    })
+    this.getEvents();
+    this.nextEventCountdown();
   }
 
-  getEventImages() {
+  getEvents() {
     let current_date = new Date();
     current_date = current_date.toISOString();
     current_date = current_date.split("T");
@@ -28,11 +33,56 @@ class Banner extends React.Component {
           return e
         }
       })
-      console.log(upComingEvents);
+      let filterEvents = res.data.events.filter(e => e);
+      console.log(filterEvents);
+      let nextEvent = filterEvents[filterEvents.length - 1];
+      console.log(nextEvent);
+      let nextEventDate = Date.parse(nextEvent.event_date);
+      console.log(nextEventDate);
       this.setState({
-        events: upComingEvents
+        events: upComingEvents,
+        nextEventDate: nextEventDate
       })
     })
+  }
+
+  //Next event clock
+  eventClock(currentDate, nextEventDate) {
+      let distance = nextEventDate - currentDate;
+      let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60 ));
+      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      if(this.state.events) {
+        return (
+          <div>{days + "d " + hours + "h " + minutes + "m " + seconds+ "s"}</div>
+        )
+      } else {
+        return (
+          <div></div>
+        )
+      }
+  }
+
+  nextEventCountdown = () => {
+    let currentDate = new Date().getTime();
+    let distance = this.state.nextEventDate - currentDate;
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60 ));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    setInterval(() => {
+      console.log("interval test");
+      this.setState({
+        days: days,
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds
+      })
+    }, 1000);
+
   }
 
   render() {
@@ -40,13 +90,22 @@ class Banner extends React.Component {
     let eventImages;
     let nextEvent;
     let eventTitle;
+    let eventClock;
+    let nextEventDate;
+    let currentDate = new Date().getTime();
+    console.log(currentDate);
+    // currentDate = currentDate.toISOString();
+    // console.log(currentDate);
+    // currentDate = currentDate.split("T");
+    // currentDate = currentDate[0];
+
     if(this.state.events) {
       console.log("got events");
+      //Get only the up coming events
       upComingEvents = this.state.events.filter(e => e);
-      console.log(upComingEvents);
-
+      //Get next event from upComingEvents
       nextEvent = upComingEvents[upComingEvents.length - 1];
-      console.log(nextEvent);
+      nextEventDate = Date.parse(nextEvent.event_date);
 
       //Get best event title
       if (nextEvent.title_tag_line && !nextEvent.title_tag_line.includes("Live")) {
@@ -67,6 +126,7 @@ class Banner extends React.Component {
       } else {
           eventTitle = nextEvent.base_title;
         }
+      console.log(eventTitle);
 
       // eventImages = upComingEvents.map((e) => {
       //   if(e.feature_image) {
@@ -78,13 +138,12 @@ class Banner extends React.Component {
       //   }
       // })
     }
-    console.log(this.state.events);
     return (
       <div className="banner">
         <h3>Banner</h3>
         {eventImages}
-
         {eventTitle}
+        {this.eventClock(currentDate, nextEventDate)}
       </div>
     )
   }
