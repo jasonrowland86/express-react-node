@@ -56,7 +56,7 @@ class Banner extends React.Component {
 
       if(this.state.events) {
         return (
-          <div>{days + "d " + hours + "h " + minutes + "m " + seconds+ "s"}</div>
+          <div className="eventClock">{days + "d " + hours + "h " + minutes + "m " + seconds+ "s"}</div>
         )
       } else {
         return (
@@ -86,6 +86,9 @@ class Banner extends React.Component {
   }
 
   render() {
+    let eventTitle1;
+    let eventTitle2;
+    let eventTitle3;
     let upComingEvents;
     let eventImages;
     let nextEvent;
@@ -127,6 +130,11 @@ class Banner extends React.Component {
           eventTitle = nextEvent.base_title;
         }
       console.log(eventTitle);
+      eventTitle = eventTitle.split(" ");
+      console.log(eventTitle);
+      eventTitle1 = eventTitle[0];
+      eventTitle2 = eventTitle[1];
+      eventTitle3 = eventTitle[2];
 
       // eventImages = upComingEvents.map((e) => {
       //   if(e.feature_image) {
@@ -141,8 +149,12 @@ class Banner extends React.Component {
     return (
       <div className="banner">
         <h3>Banner</h3>
+        <div className="banner-title">
+          <div className="banner-title-left">{eventTitle1}</div>
+          <div className="banner-title-center">{eventTitle2}</div>
+          <div className="banner-title-right">{eventTitle3}</div>
+        </div>
         {eventImages}
-        {eventTitle}
         {this.eventClock(currentDate, nextEventDate)}
       </div>
     )

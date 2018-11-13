@@ -44,6 +44,7 @@ class Main extends React.Component {
 
   // <Route exact path="/event/:id" render={() => <EventCard user={this.state.user} />} />
 
+  // <Nav handleUser={this.handleUser.bind(this)} user={this.state.user} />
 
   render() {
     console.log(this.state);
@@ -51,7 +52,6 @@ class Main extends React.Component {
       <Router>
         <div className="main">
           <Header />
-          <Nav handleUser={this.handleUser.bind(this)} user={this.state.user} />
           <Banner />
           <Info user={this.state.user} />
           <Route exact path="/" component={MainSearch} />

@@ -66,6 +66,28 @@
 .banner {
   background-color: #2677CC;
 }
+.banner-title {
+  width: 40%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+}
+.banner-title-center {
+  flex: 1;
+}
+.banner-title-left {
+  flex: 2;
+  display: flex;
+  justify-content: flex-end;
+}
+.banner-title-right {
+  flex: 2;
+  display: flex;
+  justify-content: flex-start;
+}
+.eventClock {
+  margin: 1em 0;
+}
 .search-options {
   display: flex;
   flex-direction: row;
