@@ -1,9 +1,24 @@
 .landing {
+  z-index: 5;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
   text-align: center;
+  background-color: rgba(255, 255, 255, .5);
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  background-color: #2677CC;
+  align-items: center;
+  justify-content: center;
+}
+.landing-main {
+  margin-top: 10em;
+  flex-grow: 1;
+}
+.menu-button-container {
+ margin-bottom: 1em;
+}
+.menu-button:hover {
+  cursor: pointer;
 }
 .main {
   text-align: center;
@@ -46,6 +61,7 @@
 }
 .nav-links {
   display: flex;
+  flex-direction: column;
 }
 .nav-left {
   flex: 1;

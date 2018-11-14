@@ -74,7 +74,6 @@ class Banner extends React.Component {
     let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
     setInterval(() => {
-      console.log("interval test");
       this.setState({
         days: days,
         hours: hours,
